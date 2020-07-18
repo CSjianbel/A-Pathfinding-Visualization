@@ -1,6 +1,5 @@
 import pygame
 
-
 class Node:
 
 	def __init__(self, row, column, dimension):
@@ -26,21 +25,24 @@ class Node:
 		self.rect = pygame.Rect(self.x, self.y, self.dimension, self.dimension)
 
 	
-	def draw(self, screen):
+	def draw(self, screen, color):
+		"""
+		Draws the squares to screen given a color
+		PARAMS: Self, pygame.Surface, Tupple->(int, int, int)
+		RETURN: None
+		"""
 
-		if self.isWall:
-			pygame.draw.rect(screen, (0, 0, 0), self.rect)
-		
-		elif self.isStart:
-			pygame.draw.rect(screen, (0, 0, 255), self.rect)
-
-		elif self.isEnd:
-			pygame.draw.rect(screen, (255, 0, 0), self.rect)
-
+		pygame.draw.rect(screen, color, self.rect)
 		pygame.draw.rect(screen, (0, 0, 0), self.rect, 1)
 
 	
 	def update(self):
+		"""
+		Updates states if left-clicked isWall if right-clicked not isWall
+		PARAMS: Self
+		RETURN: None
+		"""
+
 
 		if self.isStart or self.isEnd:
 			return
@@ -57,6 +59,11 @@ class Node:
 
 
 	def getNeighbors(self, grid):
+		"""
+		Appends to self.neighbors if it is not a wall and is in window
+		PARAMS: Self, List->List->Node
+		RETURN: None
+		"""
 
 		# up
 		if self.row > 0 and not grid[self.row - 1][self.column].isWall:
