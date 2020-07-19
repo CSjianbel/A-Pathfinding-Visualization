@@ -27,19 +27,19 @@ pip install pygame
 
 ## COLOR REPRESENTATIONS:
 
-* Turquoise 
+* Turquoise ![#40e0d0](https://via.placeholder.com/15/f03c15/000000?text=+)  
 	* _START NODE_
-* Purple   
+* Purple ![#9400d3](https://via.placeholder.com/15/f03c15/000000?text=+)  
 	* _END NODE_
-* Black
+* Black ![#000](https://via.placeholder.com/15/f03c15/000000?text=+)  
 	* _WALL_
-* White
+* White ![#ffffff](https://via.placeholder.com/15/f03c15/000000?text=+)  
    * _OPEN PATH_
-* Green
+* Green ![#00ff00](https://via.placeholder.com/15/f03c15/000000?text=+)  
     * _NODES IN OPEN SET_
-* Red  
+* Red  ![#ff0000](https://via.placeholder.com/15/f03c15/000000?text=+)  
 	* _NODES IN CLOSED SET_
-* Yellow
+* Yellow ![#f0ff00](https://via.placeholder.com/15/f03c15/000000?text=+)  
 	* _PATH FROM START TO END_
 
 ## Usage
