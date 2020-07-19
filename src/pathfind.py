@@ -1,3 +1,29 @@
+"""
+A pathfinding visualization of the A* Algorithm
+
+Instructions:
+
+	-> press ['s'] key to set your start node
+	-> press ['e'] key to set your end node
+	-> press/hold [left-click] to set your walls
+	-> press/hold [right-click] to remove walls
+	-> press ['a'] to start visualization
+	-> press ['q'] to reset back to before you clicked ['a']
+	-> press ['r'] to reset grid back to it's initial state
+
+COLOR REPRESENTATIONS:
+
+	turquoise -> START NODE
+	purple    -> END NODE
+	black	  -> WALL
+	white	  -> OPEN PATH
+	green	  -> NODES IN OPEN SET
+	red		  -> NODES IN CLOSED SET
+	yellow	  -> PATH FROM START TO END
+
+"""
+
+
 import pygame
 from node import Node
 import math
