@@ -21,7 +21,6 @@ for i in range(DIMENSION):
 GRID[0][0].isStart = True
 GRID[-1][-1].isEnd = True
 
-
 PATHFINDING = False
 
 START = GRID[0][0]
@@ -92,7 +91,7 @@ def update():
 
 def heuristic(node, goal):
 	"""
-	Returns the Manhattan Distance from node to goal
+	Returns the Euclidean Distance from node to goal
 	PARAMS: Node, Node
 	RETURN: Int
 	"""
@@ -100,6 +99,24 @@ def heuristic(node, goal):
 	x2, y2 = goal.column, goal.row
 	
 	return math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2)
+
+
+def resetPath():
+	"""
+	Resets grid keeping start and end and walls the same as when visualized
+	PARAMS: None
+	RETURN: None
+	"""
+	global PATH, openSet, closedSet
+
+	PATH = []
+	closedSet = []
+	openSet = []
+
+	for i in range(DIMENSION):
+		for j in range(DIMENSION):
+			GRID[i][j].neighbors = []
+
 
 
 def resetGrid():
@@ -142,9 +159,9 @@ def lowestFScore():
 	"""
 
 	lowest = 0
-	for i in range(len(openSet)):
-		if openSet[lowest].f > openSet[i].f:
-			lowest = i
+	for index in range(len(openSet)):
+		if openSet[lowest].f > openSet[index].f:
+			lowest = index
 
 	return lowest
 
@@ -170,6 +187,9 @@ while True:
 		update()
 		if keys[pygame.K_r]:
 			resetGrid()
+
+		if keys[pygame.K_q]:
+			resetPath()
 
 	else:
 				
