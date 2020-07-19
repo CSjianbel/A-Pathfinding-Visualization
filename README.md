@@ -1,13 +1,18 @@
 # A-Pathfinding-Visualization
 A pathfinding visualization of A* using python's pygame module
 
-## Installation 
+## Clone
+```bash
+git clone https://github.com/CSjianbel/A-Pathfinding-Visualization.git
+```
+
+## Setup
 
 Install Dependencies through package manager [pip](https://pip.pypa.io/en/stable/installing/)
+And clone repository
+
 ```bash
 pip install pygame
-
-git clone https://github.com/CSjianbel/A-Pathfinding-Visualization.git
 ```
 
 ## Basic Controls
