@@ -29,17 +29,17 @@ pip install pygame
 
 * Turquoise ![#40e0d0](https://via.placeholder.com/15/f03c15/000000?text=+)  
 	* _START NODE_
-* Purple ![#9400d3](https://via.placeholder.com/15/f03c15/000000?text=+)  
+* Purple ![#9400d3](https://via.placeholder.com/15/9400d3/000000?text=+)  
 	* _END NODE_
-* Black ![#000](https://via.placeholder.com/15/f03c15/000000?text=+)  
+* Black ![#000](https://via.placeholder.com/15/000/000000?text=+)  
 	* _WALL_
-* White ![#ffffff](https://via.placeholder.com/15/f03c15/000000?text=+)  
+* White ![#ffffff](https://via.placeholder.com/15/ffffff/000000?text=+)  
    * _OPEN PATH_
-* Green ![#00ff00](https://via.placeholder.com/15/f03c15/000000?text=+)  
+* Green ![#00ff00](https://via.placeholder.com/15/00ff00/000000?text=+)  
     * _NODES IN OPEN SET_
-* Red  ![#ff0000](https://via.placeholder.com/15/f03c15/000000?text=+)  
+* Red  ![#ff0000](https://via.placeholder.com/15/ff0000/000000?text=+)  
 	* _NODES IN CLOSED SET_
-* Yellow ![#f0ff00](https://via.placeholder.com/15/f03c15/000000?text=+)  
+* Yellow ![#f0ff00](https://via.placeholder.com/15/f0ff00/000000?text=+)  
 	* _PATH FROM START TO END_
 
 ## Usage
