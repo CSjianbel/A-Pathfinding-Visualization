@@ -65,20 +65,13 @@ class Node:
 		RETURN: None
 		"""
 
-		# up
-		if self.row > 0 and not grid[self.row - 1][self.column].isWall:
-			self.neighbors.append(grid[self.row - 1][self.column])
-		# down
-		if self.row < len(grid) - 1 and not grid[self.row + 1][self.column].isWall:
-			self.neighbors.append(grid[self.row + 1][self.column])
-		# left
-		if self.column > 0 and not grid[self.row][self.column - 1].isWall:
-			self.neighbors.append(grid[self.row][self.column - 1])
-		# right
-		if self.column < len(grid[0]) - 1 and not grid[self.row][self.column + 1].isWall:
-			self.neighbors.append(grid[self.row][self.column + 1])
-			
+		for i in range(-1, 2):
+			for j in range(-1, 2):
 
+				Y = self.row + i
+				X = self.column + j
 
-
+				if Y > -1 and Y < len(grid) and X > -1 and X < len(grid) and not grid[Y][X].isWall:
+					self.neighbors.append(grid[Y][X])
+		
 

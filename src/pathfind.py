@@ -1,9 +1,9 @@
 import pygame
 from node import Node
-
+import math
 
 WIDTH, HEIGHT = (600, 600)
-SPACE = 10
+SPACE = 20
 DIMENSION = WIDTH // SPACE
 GRID = []
 
@@ -98,8 +98,8 @@ def heuristic(node, goal):
 	"""
 	x1, y1 = node.column, node.row
 	x2, y2 = goal.column, goal.row
-
-	return abs(x1 - x2) + abs(y1 - y2)
+	
+	return math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2)
 
 
 def resetGrid():
