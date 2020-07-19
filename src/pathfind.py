@@ -1,13 +1,15 @@
-"""
+"""	
 A pathfinding visualization of the A* Algorithm
 
 Instructions:
 
-	-> press ['s'] key to set your start node
-	-> press ['e'] key to set your end node
+	-> press ['s'] key to set your start node (DEFAULT -> TOP-LEFT)
+	-> press ['e'] key to set your end node  (DEFAULT -> BOTTOM-RIGHT)
 	-> press/hold [left-click] to set your walls
 	-> press/hold [right-click] to remove walls
 	-> press ['a'] to start visualization
+	-> press ['o'] to set path to be across only
+	-> press ['p'] to set path to be across and diagonal (DEFAULT)
 	-> press ['q'] to reset back to before you clicked ['a']
 	-> press ['r'] to reset grid back to it's initial state
 
@@ -34,6 +36,7 @@ DIMENSION = WIDTH // SPACE
 GRID = []
 
 pygame.init()
+pygame.display.set_caption("A* PATHFINDING VISUALIZATION")
 ACROSS = False
 
 SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -153,11 +156,12 @@ def resetGrid():
 	RETURN: None
 	"""
 
-	global START, END, PATH, openSet, closedSet
+	global START, END, PATH, openSet, closedSet, ACROSS
 
 	PATH = []
 	closedSet = []
 	openSet = []
+	ACROSS = False
 	START = GRID[0][0]
 	END = GRID[-1][-1]
 
@@ -256,19 +260,23 @@ while True:
 				if neighbor in closedSet:
 					continue
 				
-				tGscore = current.g + 1
+				tGscore = current.g + heuristic(current,  neighbor)
 
+				newPath = False
 				if neighbor in openSet:
 					if tGscore < neighbor.g:
 						neighbor.g = tGscore
+						newPath = True
 				
 				else:
 					neighbor.g = tGscore
 					openSet.append(neighbor)
+					newPath = True
 
-				neighbor.previous = current
-				neighbor.h = heuristic(neighbor, END)
-				neighbor.f = neighbor.g + neighbor.h
+				if newPath:
+					neighbor.previous = current
+					neighbor.h = heuristic(neighbor, END)
+					neighbor.f = neighbor.g + neighbor.h
 
 		else:
 			# No solution
