@@ -2,9 +2,9 @@
 A pathfinding visualization of _A*_ Algorithm using python's pygame module. 
 
 _A*_ is a famous algorithm for search problems in Computer Science. _A*_ guarantess the shortest path from 2 nodes. 
-It uses heuristics to decide which nodes to explore next prioritizing nodes that are known to be closer to the goal based on the distance that is returned by a heuristic function. 
+It uses heuristics to decide which nodes to explore next, prioritizing nodes that are known to be closer to the goal based on the distance that is returned by a heuristic function. 
 
-To visualize this I created a 2d grid in pygame, and represented each cell of the grid as a node. A node can be a wall, start, or end. The path can either be both diagonal and across, or it can only be across. For my heuristic function I just calculated the Euclidean distance given from 2 nodes.  
+To visualize the algorithm I created a 2d grid in pygame, and represented each cell of the grid as a node. A node can either be wall, start, or end. The path can either be both diagonal and across (default), or it can only be across. For my heuristic function it returns the Euclidean distance of 2 nodes.  
 
 ## Clone
 ```bash
@@ -58,7 +58,7 @@ python pathfind.py
 
 ## Contributing
 
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 
 ### License

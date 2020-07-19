@@ -61,7 +61,7 @@ class Node:
 	def getNeighbors(self, grid, across):
 		"""
 		Appends to self.neighbors if it is not a wall and is in window
-		PARAMS: Self, List->List->Node
+		PARAMS: Self, List->List->Node, Bool
 		RETURN: None
 		"""
 
