@@ -58,20 +58,38 @@ class Node:
 				self.isWall = False
 
 
-	def getNeighbors(self, grid):
+	def getNeighbors(self, grid, across):
 		"""
 		Appends to self.neighbors if it is not a wall and is in window
 		PARAMS: Self, List->List->Node
 		RETURN: None
 		"""
 
-		for i in range(-1, 2):
-			for j in range(-1, 2):
+		if not across:
+			
+			for i in range(-1, 2):
+				for j in range(-1, 2):
 
-				Y = self.row + i
-				X = self.column + j
+					Y = self.row + i
+					X = self.column + j
 
-				if Y > -1 and Y < len(grid) and X > -1 and X < len(grid) and not grid[Y][X].isWall:
-					self.neighbors.append(grid[Y][X])
+					if Y > -1 and Y < len(grid) and X > -1 and X < len(grid) and not grid[Y][X].isWall:
+						self.neighbors.append(grid[Y][X])
 		
+		else:
+
+			i = self.row
+			j = self.column
+
+			if i > 0 and not grid[i - 1][j].isWall:
+					self.neighbors.append(grid[i - 1][j])
+
+			if i < len(grid) - 1 and not grid[i + 1][j].isWall:
+					self.neighbors.append(grid[i + 1][j])
+
+			if j > 0 and not grid[i][j - 1].isWall:
+					self.neighbors.append(grid[i][j - 1])
+
+			if j < len(grid[i]) - 1 and not grid[i][j + 1].isWall:
+					self.neighbors.append(grid[i][j + 1])
 

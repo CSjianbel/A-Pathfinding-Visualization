@@ -1,7 +1,12 @@
 # A-Pathfinding-Visualization
-A pathfinding visualization of A* using python's pygame module
+A pathfinding visualization of _A*_ Algorithm using python's pygame module. 
 
-## Clone
+_A*_ is a famous algorithm for search problems in Computer Science. _A*_ guarantess the shortest path from 2 nodes. 
+It uses heuristics to decide which nodes to explore next prioritizing nodes that are known to be closer to the goal based on the heuristic function. 
+
+To visualize this I created a 2d grid in pygame, and represented each cell of the grid as a node. A node can be a wall, start, or end.  
+The path can either be both diagonal and across, or it can only be across. For my heuristic function I just calculated the   
+
 ```bash
 git clone https://github.com/CSjianbel/A-Pathfinding-Visualization.git
 ```
@@ -55,7 +60,7 @@ python pathfind.py
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change
 
 
-## License
+### License
 [MIT](https://choosealicense.com/licenses/mit/)
 
 *A Project by Jiankarlo A. Belarmino*

@@ -34,6 +34,7 @@ DIMENSION = WIDTH // SPACE
 GRID = []
 
 pygame.init()
+ACROSS = False
 
 SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
 
@@ -217,11 +218,18 @@ while True:
 		if keys[pygame.K_q]:
 			resetPath()
 
+		if keys[pygame.K_o]:
+			ACROSS = True
+
+		if keys[pygame.K_p]:
+			ACROSS = False
+
+
 	else:
 				
 		for row in GRID:
 			for node in row:
-				node.getNeighbors(GRID)
+				node.getNeighbors(GRID,ACROSS)
 
 		if len(openSet) > 0:
 			
