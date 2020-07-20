@@ -71,13 +71,9 @@ Optionally you may change the WIDTH of the window. Provide a number that is Divi
   
 ```bash
 python pathfind.py <WIDTH>
+  
 python pathfind.py 800
 ```
-## Reference  
-  
-[A*](https://en.wikipedia.org/wiki/A*_search_algorithm)  
-[Pygame](https://www.pygame.org/docs/)
-  
   
 ## Contributing
 
