@@ -73,16 +73,17 @@ Optionally you may change the WIDTH of the window. Provide a number that is Divi
 python pathfind.py <WIDTH>
 python pathfind.py 800
 ```
-
+## Reference  
+  
+[A*](https://en.wikipedia.org/wiki/A*_search_algorithm)  
+[Pygame](https://www.pygame.org/docs/)
+  
+  
 ## Contributing
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
-## Reference  
-
-[A*]https://en.wikipedia.org/wiki/A*_search_algorithm
-[Pygame]https://www.pygame.org/docs/
-
+  
+  
 ### License
 [MIT](https://choosealicense.com/licenses/mit/)
 
