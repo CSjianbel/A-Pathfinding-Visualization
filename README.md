@@ -29,8 +29,9 @@ pip install pygame
 * FIND PATH: 'a'
 * STOP FINDING PATH: '0'
   
-* SET ACROSS ONLY: 'o'
-* SET ACROSS AND DIAGONAL: 'p' (DEFAULT)
+* SET PATHING:  'o'
+	* SET ACROSS AND DIAGONAL: 'p' (DEFAULT)  
+	* SET ACROSS ONLY: 'o'
   
 * SET SPEEDS: 
 	* '3' FAST (DEFAULT)
