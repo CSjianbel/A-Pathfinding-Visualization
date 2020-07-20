@@ -29,7 +29,7 @@ pip install pygame
 * FIND PATH: 'a'
 * STOP FINDING PATH: '0'
   
-* SET PATHING:  'o'
+* SET PATHING:  
 	* SET ACROSS AND DIAGONAL: 'p' (DEFAULT)  
 	* SET ACROSS ONLY: 'o'
   
@@ -67,7 +67,8 @@ cd src
 python pathfind.py
 ```
   
-Optionally you may change the WIDTH of the window. Provide a number that is Divisible by 20. If given invalid number window will start with default WIDTH of 600.
+Optionally you may change the WIDTH of the window. Provide a number that is Divisible by 20.  
+If given invalid number window will start with default WIDTH of 600.
   
 ```bash
 python pathfind.py <WIDTH>
