@@ -67,13 +67,11 @@ cd src
 python pathfind.py
 ```
   
-Optionally you may change the WIDTH of the window. Provide a number that is Divisible by 20.
+Optionally you may change the WIDTH of the window. Provide a number that is Divisible by 20. If given invalid number window will start with default WIDTH of 600.
   
 ```bash
 python pathfind.py <WIDTH>
 python pathfind.py 800
-
-python pathfind.py 235 [ERROR!]
 ```
 
 ## Contributing
