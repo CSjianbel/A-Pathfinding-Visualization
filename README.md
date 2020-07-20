@@ -5,7 +5,7 @@ _A*_ is a famous algorithm for search problems in Computer Science. _A*_ guarant
 It uses heuristics to decide which nodes to explore next, prioritizing nodes that are known to be closer to the goal based on the Euclidean distance that is returned by a heuristic function. 
 
 To visualize the algorithm I created a 2d grid in pygame, and represented each cell of the grid as a node. A node can either be wall, start, or end. The path can either be both diagonal and across (default), or it can only be across. For my heuristic function it returns the Euclidean distance of 2 nodes.  
-
+  
 ## Clone
 ```bash
 git clone https://github.com/CSjianbel/A-Pathfinding-Visualization.git
@@ -20,16 +20,26 @@ pip install pygame
 ```
 
 ## Basic Controls
-
+  
 * START: 's' 
 * END: 'e' 
 * WALL: left click
 * REMOVE WALL: right click
+  
 * FIND PATH: 'a'
+* STOP FINDING PATH: '0'
+  
 * SET ACROSS ONLY: 'o'
-* SET ACROSS AND DIAGONAL: 'p' (default)
+* SET ACROSS AND DIAGONAL: 'p' (DEFAULT)
+  
+* SET SPEEDS: 
+	* '3' FAST (DEFAULT)
+	* '2' MEDIUM 
+	* '1' SLOW
+  
 * RESET: 'q'
 * RESET GRID: 'r'
+
 
 ## COLOR REPRESENTATIONS:
 
@@ -54,6 +64,15 @@ pip install pygame
 cd src
 
 python pathfind.py
+```
+  
+Optionally you may change the WIDTH of the window. Provide a number that is Divisible by 20.
+  
+```bash
+python pathfind.py <WIDTH>
+python pathfind.py 800
+
+python pathfind.py 235 [ERROR!]
 ```
 
 ## Contributing

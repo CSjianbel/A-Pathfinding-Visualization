@@ -73,7 +73,7 @@ class Node:
 					Y = self.row + i
 					X = self.column + j
 
-					if Y > -1 and Y < len(grid) and X > -1 and X < len(grid) and not grid[Y][X].isWall:
+					if Y > -1 and Y < len(grid) and X > -1 and X < len(grid[0]) and not grid[Y][X].isWall:
 						self.neighbors.append(grid[Y][X])
 		
 		else:
