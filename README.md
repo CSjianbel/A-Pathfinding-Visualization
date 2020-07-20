@@ -38,6 +38,8 @@ pip install pygame
 	* '2' MEDIUM 
 	* '1' SLOW
   
+* GENERATE RANDOM MAZE: '9'
+
 * RESET: 'q'
 * RESET GRID: 'r'
 

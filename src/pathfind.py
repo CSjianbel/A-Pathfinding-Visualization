@@ -36,6 +36,8 @@ Instructions:
 	-> press ['2'] to evaluate 5 Nodes per frame
 	-> press ['3'] to evaluate 10 Nodes per frame (DEFAULT)
 
+	-> press ['9'] to generate a random maze
+
 COLOR REPRESENTATIONS:
 
 	turquoise -> START NODE
@@ -52,6 +54,7 @@ COLOR REPRESENTATIONS:
 import pygame
 from node import Node
 from math import sqrt
+from random import randint
 from sys import argv
 
 WIDTH, HEIGHT = 600, 600
@@ -60,6 +63,7 @@ if len(argv) == 2:
 	try:
 		argv = int(argv[1])
 		if argv % 20 == 0:
+			print(f"WIDTH SET TO {argv}")
 			WIDTH = argv
 		else:
 			print("Must be divisible by 20")
@@ -74,7 +78,6 @@ SPEED = 10
 
 pygame.init()
 pygame.display.set_caption("A* PATHFINDING VISUALIZATION")
-ACROSS = False
 
 SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
 
@@ -96,6 +99,7 @@ END = GRID[-1][-1]
 TEMP_PATH = []
 PATH = []
 foundPath = False
+ACROSS = False
 
 openSet = list()
 closedSet = list()
@@ -130,7 +134,7 @@ def draw():
 	
 def update():
 	"""
-	Updates the state of the board
+	Updates the state of the window every frame
 	PARAMS: None
 	RETURN: None
 	"""
@@ -144,16 +148,10 @@ def update():
 				keys = pygame.key.get_pressed()
 
 				if keys[pygame.K_s] and not GRID[i][j].isEnd:
-					START.isStart = False
-					GRID[i][j].isWall = False
-					GRID[i][j].isStart = True
-					START = GRID[i][j]
+					setStart(i, j)
 
 				elif keys[pygame.K_e] and not GRID[i][j].isStart:
-					END.isEnd = False
-					GRID[i][j].isWall = False
-					GRID[i][j].isEnd = True
-					END = GRID[i][j]
+					setEnd(i, j)
 
 			GRID[i][j].update()
 
@@ -187,6 +185,7 @@ def resetPath():
 		for j in range(COLS):
 			GRID[i][j].neighbors = []
 
+	print("Grid was reset")
 
 
 def resetGrid():
@@ -222,6 +221,8 @@ def resetGrid():
 			GRID[i][j].isWall = False	
 			GRID[i][j].neighbors = []	
 
+	print("Grid was reset back to initial state")
+
 
 def lowestFScore():
 	"""
@@ -247,8 +248,97 @@ def stopFindingPath():
 	global openSet
 
 	openSet = []
+	print("Finding path was stopped")
 
 
+def setPathing(pathing): 
+	"""
+	Sets pathing to be either across & diagonal or across only
+	PARAMS: Boolean
+	Return: None
+
+	"""
+
+	global ACROSS
+
+	if pathing:
+		ACROSS = True
+		print("Set to ACROSS ONLY")
+
+	else:
+		ACROSS = False
+		print("Set to ACROSS & DIAGONAL")
+
+
+def setSpeed(speed):
+	"""
+	Sets the speed of the algorithm
+	PARAMS: Int
+	RETURN: None
+	"""
+
+	global SPEED
+
+	if speed == 1:
+		SPEED = 1
+		print("Set speed to SLOW")
+
+	elif speed == 2:
+		SPEED = 5
+		print("Set speed to MEDIUM")
+
+	elif speed == 3:
+		SPEED = 10 
+		print("Set speed to FAST")
+
+
+def setStart(i, j):
+	"""	
+	Sets the Start Node
+	PARAMS: Int, Int
+	RETURN: None
+	"""
+
+	global START, GRID
+
+	START.isStart = False
+	GRID[i][j].isWall = False
+	GRID[i][j].isStart = True
+	START = GRID[i][j]
+
+
+
+def setEnd(i, j):
+	"""	
+	Sets the End Node
+	PARAMS: Int, Int
+	RETURN: None
+	"""
+
+	global END, GRID
+
+	END.isEnd = False
+	GRID[i][j].isWall = False
+	GRID[i][j].isEnd = True
+	END = GRID[i][j]
+
+
+def randomMaze():
+	"""
+	Generates a random maze 
+	PARAMS: None
+	RETURN: None
+	"""
+
+	global GRID
+
+	for row in GRID:
+		for node in row:
+			if node == START or node == END:
+				continue
+			node.isWall = False
+			if randint(0, 100) < 20:
+				node.isWall = True
 
 
 while True:
@@ -259,7 +349,7 @@ while True:
 
 		if event.type == pygame.QUIT:
 			
-			print("THANKS YOU!")
+			print("THANK YOU!")
 			pygame.quit()
 			exit()
 
@@ -272,39 +362,32 @@ while True:
 	if not PATHFINDING:
 		update()
 		if keys[pygame.K_r]:
-			print("Grid was reset back to initial state")
 			resetGrid()
 
-		if keys[pygame.K_q]:
-			print("Grid was reset")
+		elif keys[pygame.K_q]:
 			resetPath()
 
-		if keys[pygame.K_o]:
-			print("Set to ACROSS ONLY")
-			ACROSS = True
+		elif keys[pygame.K_o]:
+			setPathing(True)
 
-		if keys[pygame.K_p]:
-			print("Set to ACROSS & DIAGONAL")
-			ACROSS = False
+		elif keys[pygame.K_p]:
+			setPathing(False)
 
-		if keys[pygame.K_1]:
-			print("Set speed to SLOW")
-			SPEED = 1
+		elif keys[pygame.K_1]:
+			setSpeed(1)
 
-		if keys[pygame.K_2]:
-			print("Set speed to MEDIUM")
-			SPEED = 5
+		elif keys[pygame.K_2]:
+			setSpeed(2)
 
-		if keys[pygame.K_3]:
-			print("Set speed to FAST")
-			SPEED = 10
+		elif keys[pygame.K_3]:
+			setSpeed(3)
 
-
+		elif keys[pygame.K_9]:
+			randomMaze()
 
 	else:
-
+		
 		if keys[pygame.K_0]:
-			print("Finding path was stopped")
 			stopFindingPath()
 				
 		for row in GRID:
