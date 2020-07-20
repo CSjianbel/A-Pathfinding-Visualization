@@ -93,7 +93,9 @@ PATHFINDING = False
 START = GRID[0][0]
 END = GRID[-1][-1]
 
+TEMP_PATH = []
 PATH = []
+foundPath = False
 
 openSet = list()
 closedSet = list()
@@ -174,9 +176,10 @@ def resetPath():
 	PARAMS: None
 	RETURN: None
 	"""
-	global PATH, openSet, closedSet
+	global PATH, TEMP_PATH, openSet, closedSet
 
 	PATH = []
+	TEMP_PATH = []
 	closedSet = []
 	openSet = []
 
@@ -193,9 +196,10 @@ def resetGrid():
 	RETURN: None
 	"""
 
-	global START, END, PATH, openSet, closedSet, ACROSS
+	global START, END, PATH, TEMP_PATH, openSet, closedSet, ACROSS
 
 	PATH = []
+	TEMP_PATH = []
 	closedSet = []
 	openSet = []
 	ACROSS = False
@@ -254,7 +258,8 @@ while True:
 	for event in pygame.event.get():
 
 		if event.type == pygame.QUIT:
-
+			
+			print("THANKS YOU!")
 			pygame.quit()
 			exit()
 
@@ -267,24 +272,31 @@ while True:
 	if not PATHFINDING:
 		update()
 		if keys[pygame.K_r]:
+			print("Grid was reset back to initial state")
 			resetGrid()
 
 		if keys[pygame.K_q]:
+			print("Grid was reset")
 			resetPath()
 
 		if keys[pygame.K_o]:
+			print("Set to ACROSS ONLY")
 			ACROSS = True
 
 		if keys[pygame.K_p]:
+			print("Set to ACROSS & DIAGONAL")
 			ACROSS = False
 
 		if keys[pygame.K_1]:
+			print("Set speed to SLOW")
 			SPEED = 1
 
 		if keys[pygame.K_2]:
+			print("Set speed to MEDIUM")
 			SPEED = 5
 
 		if keys[pygame.K_3]:
+			print("Set speed to FAST")
 			SPEED = 10
 
 
@@ -292,6 +304,7 @@ while True:
 	else:
 
 		if keys[pygame.K_0]:
+			print("Finding path was stopped")
 			stopFindingPath()
 				
 		for row in GRID:
@@ -311,13 +324,15 @@ while True:
 
 					tmp = current
 
-					PATH.append(current)
+					TEMP_PATH.append(current)
 
 					while tmp.previous:
-						PATH.append(tmp.previous)
+						TEMP_PATH.append(tmp.previous)
 						tmp = tmp.previous
 					
 					PATHFINDING = False
+					foundPath = True
+					print("FOUND PATH")
 
 				openSet.pop(winner)
 				closedSet.append(current)
@@ -346,9 +361,13 @@ while True:
 						neighbor.f = neighbor.g + neighbor.h
 
 		else:
-			# No solution
+
 			print("NO PATH")
 			PATHFINDING = False
+
+	if foundPath and len(TEMP_PATH) != 0:
+
+		PATH.append(TEMP_PATH.pop())
 	
 	draw()
 
