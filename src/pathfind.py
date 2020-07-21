@@ -7,12 +7,13 @@ Usage:
 
 	optionally: 
 
-		You may specify the width of the window must be divisible by 20
+		You may specify the width of the window, width must be divisible by 15, 
+		if not the program will automatically adjust the width to be divisible by 15
 
 		DEFAULT WIDTH: 600 
 
 		python pathfind.py <WIDTH>
-		python pathfind.py 800
+		python pathfind.py 900
 	
 
 Instructions:
@@ -62,15 +63,12 @@ WIDTH, HEIGHT = 600, 600
 if len(argv) == 2:
 	try:
 		argv = int(argv[1])
-		if argv % 20 == 0:
-			print(f"WIDTH SET TO {argv}")
-			WIDTH = argv
-		else:
-			print("Must be divisible by 20")
+		WIDTH = argv - (argv % 15)
+		print(f"WIDTH SET TO {WIDTH}")
 	except:
 		print("Invalid Command line argument")
 
-SPACE = 20
+SPACE = 15
 COLS = WIDTH // SPACE
 ROWS = HEIGHT // SPACE 
 GRID = []
@@ -330,14 +328,14 @@ def randomMaze():
 	RETURN: None
 	"""
 
-	global GRID
+	global GRID, START, END
 
 	for row in GRID:
 		for node in row:
 			if node == START or node == END:
 				continue
 			node.isWall = False
-			if randint(0, 100) < 20:
+			if randint(0, 100) < 25:
 				node.isWall = True
 
 
