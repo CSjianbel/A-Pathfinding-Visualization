@@ -18,39 +18,45 @@ Usage:
 
 Instructions:
 
-	-> press ['s'] key to set your start node (DEFAULT -> TOP-LEFT)
-	-> press ['e'] key to set your end node  (DEFAULT -> BOTTOM-RIGHT)
+	* START / END
+		* press ['s'] key to set your start node (DEFAULT -> TOP-LEFT)
+		* press ['e'] key to set your end node  (DEFAULT -> BOTTOM-RIGHT)
 	
-	-> press/hold [left-click] to set your walls
-	-> press/hold [right-click] to remove walls
+	* WALLS
+		* press/hold [left-click] to set your walls
+		* press/hold [right-click] to remove walls
 	
-	-> press ['a'] to start visualization
-	-> press ['0'] to stop visualization
+	* VISUALIZE 
+		* press ['a'] to start visualization
+		* press ['0'] to stop visualization
 
-	-> press ['o'] to set path to be across only
-	-> press ['p'] to set path to be across and diagonal (DEFAULT)
+	* SET PATHING
+		* press ['o'] to set path to be across only
+		* press ['p'] to set path to be across and diagonal (DEFAULT)
 
-	-> press ['q'] to reset back to before you clicked ['a']
-	-> press ['r'] to reset grid back to it's initial state
+	* SET SPEED
+		* press ['1'] to evaluate 2 Node per frame
+		* press ['2'] to evaluate 5 Nodes per frame
+		* press ['3'] to evaluate 10 Nodes per frame (DEFAULT)
+	
+	* RESET CONTROLS
+		* press ['q'] to reset back to before you clicked ['a']
+		* press ['r'] to reset grid back to it's initial state
 
-	-> press ['1'] to evaluate 1 Node per frame
-	-> press ['2'] to evaluate 5 Nodes per frame
-	-> press ['3'] to evaluate 10 Nodes per frame (DEFAULT)
-
-	-> press ['9'] to generate a random maze
+	* RANDOM MAZE
+		* press ['9'] to generate a random maze	
 
 COLOR REPRESENTATIONS:
 
-	turquoise -> START NODE
-	purple    -> END NODE
-	black	  -> WALL
-	white	  -> OPEN PATH
-	green	  -> NODES IN OPEN SET
-	red		  -> NODES IN CLOSED SET
-	yellow	  -> PATH FROM START TO END
+	* turquoise -> START NODE
+	* purple    -> END NODE
+	* black	  -> WALL
+	* white	  -> OPEN PATH
+	* green	  -> NODES IN OPEN SET
+	* red		  -> NODES IN CLOSED SET
+	* yellow	  -> PATH FROM START TO END
 
 """
-
 
 import pygame
 from math import sqrt
@@ -400,7 +406,7 @@ def setSpeed(speed):
 	global SPEED
 
 	if speed == 1:
-		SPEED = 1
+		SPEED = 2
 		print("Set speed to SLOW")
 
 	elif speed == 2:
@@ -461,6 +467,7 @@ def randomMaze():
 				node.isWall = True
 
 
+" RUNS THE PROGRAM "
 if __name__ == "__main__":
     main()
 

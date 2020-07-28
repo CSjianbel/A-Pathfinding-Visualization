@@ -63,6 +63,7 @@ class Node:
 		RETURN: None
 		"""
 
+		# If pathing is set to across and diagonal
 		if not across:
 			
 			for i in range(-1, 2):
@@ -74,6 +75,7 @@ class Node:
 					if Y > -1 and Y < len(grid) and X > -1 and X < len(grid[0]) and not grid[Y][X].isWall:
 						self.neighbors.append(grid[Y][X])
 		
+		# If pathing is set to across only
 		else:
 
 			i = self.row
