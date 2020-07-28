@@ -59,6 +59,7 @@ from random import randint
 from sys import argv
 
 WIDTH, HEIGHT = 600, 600
+WINDOW_HEIGHT = 675
 
 if len(argv) == 2:
 	try:
@@ -77,8 +78,15 @@ SPEED = 10
 pygame.init()
 pygame.display.set_caption("A* PATHFINDING VISUALIZATION")
 
-SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
+SCREEN = pygame.display.set_mode((WIDTH, WINDOW_HEIGHT))
 
+# Fonts
+OPEN_SANS = "assets/OpenSans-Regular.ttf"
+smallFont = pygame.font.Font(OPEN_SANS, 20)
+mediumFont = pygame.font.Font(OPEN_SANS, 28)
+largeFont = pygame.font.Font(OPEN_SANS, 40)
+
+# SETUP
 # Creates GRID of Nodes
 for i in range(ROWS):
 	GRID.append([])
@@ -101,7 +109,6 @@ ACROSS = False
 
 openSet = list()
 closedSet = list()
-
 
 def draw():
 	"""
@@ -152,6 +159,128 @@ def update():
 					setEnd(i, j)
 
 			GRID[i][j].update()
+
+
+def main():
+	"""
+	Main function runs the whole program
+	"""
+	global PATHFINDING, foundPath
+	
+	while True:
+
+		SCREEN.fill((255,255,255))
+
+		for event in pygame.event.get():
+
+			if event.type == pygame.QUIT:
+				
+				print("THANK YOU!")
+				pygame.quit()
+				exit()
+
+		keys = pygame.key.get_pressed()
+		if keys[pygame.K_a] and len(openSet) == 0:
+			PATHFINDING = True
+			openSet.append(START)
+			START.f = heuristic(START, END)
+
+		if not PATHFINDING:
+			update()
+			if keys[pygame.K_r]:
+				resetGrid()
+
+			elif keys[pygame.K_q]:
+				resetPath()
+
+			elif keys[pygame.K_o]:
+				setPathing(True)
+
+			elif keys[pygame.K_p]:
+				setPathing(False)
+
+			elif keys[pygame.K_1]:
+				setSpeed(1)
+
+			elif keys[pygame.K_2]:
+				setSpeed(2)
+
+			elif keys[pygame.K_3]:
+				setSpeed(3)
+
+			elif keys[pygame.K_9]:
+				randomMaze()
+
+		else:
+			
+			if keys[pygame.K_0]:
+				stopFindingPath()
+					
+			for row in GRID:
+				for node in row:
+					node.getNeighbors(GRID, ACROSS)
+
+			if len(openSet) > 0:
+				mult = SPEED
+				while mult > 0 and len(openSet) > 0:
+					
+					mult -= 1
+
+					winner = lowestFScore()
+					current = openSet[winner]
+
+					if current == END:
+
+						tmp = current
+
+						TEMP_PATH.append(current)
+
+						while tmp.previous:
+							TEMP_PATH.append(tmp.previous)
+							tmp = tmp.previous
+						
+						PATHFINDING = False
+						foundPath = True
+						print("FOUND PATH")
+
+					openSet.pop(winner)
+					closedSet.append(current)
+
+					for neighbor in current.neighbors:
+						
+						if neighbor in closedSet:
+							continue
+						
+						tGscore = current.g + heuristic(current,  neighbor)
+
+						newPath = False
+						if neighbor in openSet:
+							if tGscore < neighbor.g:
+								neighbor.g = tGscore
+								newPath = True
+						
+						else:
+							neighbor.g = tGscore
+							openSet.append(neighbor)
+							newPath = True
+
+						if newPath:
+							neighbor.previous = current
+							neighbor.h = heuristic(neighbor, END)
+							neighbor.f = neighbor.g + neighbor.h
+
+			else:
+
+				print("NO PATH")
+				PATHFINDING = False
+
+		if foundPath and len(TEMP_PATH) != 0:
+
+			PATH.append(TEMP_PATH.pop())
+		
+		draw()
+
+		pygame.display.update()
 
 
 def heuristic(node, goal):
@@ -339,122 +468,8 @@ def randomMaze():
 				node.isWall = True
 
 
-while True:
-
-	SCREEN.fill((255,255,255))
-
-	for event in pygame.event.get():
-
-		if event.type == pygame.QUIT:
-			
-			print("THANK YOU!")
-			pygame.quit()
-			exit()
-
-	keys = pygame.key.get_pressed()
-	if keys[pygame.K_a] and len(openSet) == 0:
-		PATHFINDING = True
-		openSet.append(START)
-		START.f = heuristic(START, END)
-
-	if not PATHFINDING:
-		update()
-		if keys[pygame.K_r]:
-			resetGrid()
-
-		elif keys[pygame.K_q]:
-			resetPath()
-
-		elif keys[pygame.K_o]:
-			setPathing(True)
-
-		elif keys[pygame.K_p]:
-			setPathing(False)
-
-		elif keys[pygame.K_1]:
-			setSpeed(1)
-
-		elif keys[pygame.K_2]:
-			setSpeed(2)
-
-		elif keys[pygame.K_3]:
-			setSpeed(3)
-
-		elif keys[pygame.K_9]:
-			randomMaze()
-
-	else:
-		
-		if keys[pygame.K_0]:
-			stopFindingPath()
-				
-		for row in GRID:
-			for node in row:
-				node.getNeighbors(GRID, ACROSS)
-
-		if len(openSet) > 0:
-			mult = SPEED
-			while mult > 0 and len(openSet) > 0:
-				
-				mult -= 1
-
-				winner = lowestFScore()
-				current = openSet[winner]
-
-				if current == END:
-
-					tmp = current
-
-					TEMP_PATH.append(current)
-
-					while tmp.previous:
-						TEMP_PATH.append(tmp.previous)
-						tmp = tmp.previous
-					
-					PATHFINDING = False
-					foundPath = True
-					print("FOUND PATH")
-
-				openSet.pop(winner)
-				closedSet.append(current)
-
-				for neighbor in current.neighbors:
-					
-					if neighbor in closedSet:
-						continue
-					
-					tGscore = current.g + heuristic(current,  neighbor)
-
-					newPath = False
-					if neighbor in openSet:
-						if tGscore < neighbor.g:
-							neighbor.g = tGscore
-							newPath = True
-					
-					else:
-						neighbor.g = tGscore
-						openSet.append(neighbor)
-						newPath = True
-
-					if newPath:
-						neighbor.previous = current
-						neighbor.h = heuristic(neighbor, END)
-						neighbor.f = neighbor.g + neighbor.h
-
-		else:
-
-			print("NO PATH")
-			PATHFINDING = False
-
-	if foundPath and len(TEMP_PATH) != 0:
-
-		PATH.append(TEMP_PATH.pop())
-	
-	draw()
-
-	pygame.display.update()
-
-
+if __name__ == "__main__":
+    main()
 
 
 
