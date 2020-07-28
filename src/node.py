@@ -43,12 +43,10 @@ class Node:
 		RETURN: None
 		"""
 
-
 		if self.isStart or self.isEnd:
 			return
 
-		mouseX = pygame.mouse.get_pos()[0]
-		mouseY = pygame.mouse.get_pos()[1]
+		mouseX, mouseY = pygame.mouse.get_pos()
 
 		if self.rect.collidepoint(mouseX, mouseY):
 			if pygame.mouse.get_pressed()[0]:

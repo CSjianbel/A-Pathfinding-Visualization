@@ -53,13 +53,13 @@ COLOR REPRESENTATIONS:
 
 
 import pygame
-from node import Node
 from math import sqrt
 from random import randint
 from sys import argv
 
+from node import Node
+
 WIDTH, HEIGHT = 600, 600
-WINDOW_HEIGHT = 675
 
 if len(argv) == 2:
 	try:
@@ -68,6 +68,7 @@ if len(argv) == 2:
 		print(f"WIDTH SET TO {WIDTH}")
 	except:
 		print("Invalid Command line argument")
+		print(f"WIDTH SET TO {WIDTH}")
 
 SPACE = 15
 COLS = WIDTH // SPACE
@@ -78,13 +79,7 @@ SPEED = 10
 pygame.init()
 pygame.display.set_caption("A* PATHFINDING VISUALIZATION")
 
-SCREEN = pygame.display.set_mode((WIDTH, WINDOW_HEIGHT))
-
-# Fonts
-OPEN_SANS = "assets/OpenSans-Regular.ttf"
-smallFont = pygame.font.Font(OPEN_SANS, 20)
-mediumFont = pygame.font.Font(OPEN_SANS, 28)
-largeFont = pygame.font.Font(OPEN_SANS, 40)
+SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
 
 # SETUP
 # Creates GRID of Nodes
@@ -136,6 +131,8 @@ def draw():
 	START.draw(SCREEN, (64,224,208))
 	END.draw(SCREEN, (148,0,211))
 
+	pygame.display.update()
+
 	
 def update():
 	"""
@@ -168,8 +165,6 @@ def main():
 	global PATHFINDING, foundPath
 	
 	while True:
-
-		SCREEN.fill((255,255,255))
 
 		for event in pygame.event.get():
 
@@ -279,8 +274,6 @@ def main():
 			PATH.append(TEMP_PATH.pop())
 		
 		draw()
-
-		pygame.display.update()
 
 
 def heuristic(node, goal):
