@@ -39,7 +39,7 @@ Instructions:
 		* press ['2'] to evaluate 5 Nodes per frame
 		* press ['3'] to evaluate 10 Nodes per frame (DEFAULT)
 	
-	* RESET CONTROLS
+	* RESET 
 		* press ['q'] to reset back to before you clicked ['a']
 		* press ['r'] to reset grid back to it's initial state
 

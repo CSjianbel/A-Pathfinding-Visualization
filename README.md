@@ -39,9 +39,10 @@ pip install pygame
 	* '1' SLOW
   
 * GENERATE RANDOM MAZE: '9'
-
-* RESET: 'q'
-* RESET GRID: 'r'
+  
+* RESETS:
+	* SOFT RESET: 'q'
+	* HARD RESET: 'r'
 
 
 ## COLOR REPRESENTATIONS:
