@@ -16,7 +16,9 @@ git clone https://github.com/CSjianbel/A-Pathfinding-Visualization.git
 Install Dependencies through package manager [pip](https://pip.pypa.io/en/stable/installing/)
 
 ```bash
-pip install pygame
+cd src
+
+pip install -r requirements.txt
 ```
 
 ## Basic Controls
@@ -65,8 +67,6 @@ pip install pygame
 ## Usage
 
 ```bash
-cd src
-
 python pathfind.py
 ```
   
