@@ -216,24 +216,27 @@ def main():
 			
 			if keys[pygame.K_0]:
 				stopFindingPath()
-					
+			
+			# Set neighbors for all the nodes in the board
 			for row in GRID:
 				for node in row:
 					node.getNeighbors(GRID, ACROSS)
 
 			if len(openSet) > 0:
+				# mult is how many nodes are evaluated per frame
 				mult = SPEED
 				while mult > 0 and len(openSet) > 0:
 					
 					mult -= 1
-
+					# Choose the node with the lowest F score
 					winner = lowestFScore()
 					current = openSet[winner]
 
+					# If the solution has been found
 					if current == END:
 
 						tmp = current
-
+						# Holds the solution of the board
 						TEMP_PATH.append(current)
 
 						while tmp.previous:
@@ -244,16 +247,20 @@ def main():
 						foundPath = True
 						print("FOUND PATH")
 
+					# remove the current node from the openset and add it to the closed set
 					openSet.pop(winner)
 					closedSet.append(current)
 
+					# For every neighbor of the current node
 					for neighbor in current.neighbors:
 						
 						if neighbor in closedSet:
 							continue
 						
+						# Get the total g score of the neighbor
 						tGscore = current.g + heuristic(current,  neighbor)
 
+						# Check for a new path 
 						newPath = False
 						if neighbor in openSet:
 							if tGscore < neighbor.g:
@@ -271,10 +278,11 @@ def main():
 							neighbor.f = neighbor.g + neighbor.h
 
 			else:
-
+				# no path 
 				print("NO PATH")
 				PATHFINDING = False
 
+		# If a path is found every frame add it to the PATH
 		if foundPath and len(TEMP_PATH) != 0:
 
 			PATH.append(TEMP_PATH.pop())
