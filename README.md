@@ -1,4 +1,4 @@
-# A-Pathfinding-Visualization
+# A Pathfinding Visualization
 A pathfinding visualization of _A*_ Algorithm using python's pygame module. 
 
 _A*_ is a famous algorithm for search problems in Computer Science. _A*_ guarantees the shortest path from 2 nodes. 
