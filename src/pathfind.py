@@ -76,6 +76,9 @@ if len(argv) == 2:
 		print("Invalid Command line argument")
 		print(f"WIDTH SET TO {WIDTH}")
 
+"""
+	Constants
+"""
 SPACE = 15
 COLS = WIDTH // SPACE
 ROWS = HEIGHT // SPACE 
@@ -98,8 +101,10 @@ for i in range(ROWS):
 GRID[0][0].isStart = True
 GRID[-1][-1].isEnd = True
 
+# Initially we are not finding a Path
 PATHFINDING = False
 
+# Keeps track of the start and end nodes
 START = GRID[0][0]
 END = GRID[-1][-1]
 
@@ -118,19 +123,25 @@ def draw():
 	RETURN: None
 	"""
 
+	# Draws the grid 
 	for row in GRID:
 		for node in row:
+			# If it is a wall draw it as black
 			if node.isWall:
 				node.draw(SCREEN, (0,0,0))
+			# else draw it as white
 			else:
 				node.draw(SCREEN, (255,255,255))
 
+	# Nodes in the openset are green
 	for node in openSet:
 		node.draw(SCREEN, (0,255,0))
 
+	# Nodes in the closedSet are red
 	for node in closedSet:
 		node.draw(SCREEN, (255,0,0))
 
+	# The path from start to end is yellow
 	for node in PATH:
 		node.draw(SCREEN, (240, 255, 0, 1))
 
@@ -174,18 +185,22 @@ def main():
 
 		for event in pygame.event.get():
 
+			# If exit button is pressed exit the program
 			if event.type == pygame.QUIT:
 				
 				print("THANK YOU!")
 				pygame.quit()
 				exit()
 
+		# States of the keys in a given fram
 		keys = pygame.key.get_pressed()
+		# If a is pressed then  start finding a path
 		if keys[pygame.K_a] and len(openSet) == 0:
 			PATHFINDING = True
 			openSet.append(START)
 			START.f = heuristic(START, END)
 
+		# If we are not searching for the path
 		if not PATHFINDING:
 			update()
 			if keys[pygame.K_r]:
@@ -194,12 +209,14 @@ def main():
 			elif keys[pygame.K_q]:
 				resetPath()
 
+			# Set across
 			elif keys[pygame.K_o]:
 				setPathing(True)
-
+			# Set across and diagonal
 			elif keys[pygame.K_p]:
 				setPathing(False)
 
+			# Set speeds
 			elif keys[pygame.K_1]:
 				setSpeed(1)
 
@@ -209,31 +226,36 @@ def main():
 			elif keys[pygame.K_3]:
 				setSpeed(3)
 
+			# Generate a random maze
 			elif keys[pygame.K_9]:
 				randomMaze()
 
 		else:
 			
+			# Stop finding the path
 			if keys[pygame.K_0]:
 				stopFindingPath()
-					
+			
+			# Set neighbors for all the nodes in the board
 			for row in GRID:
 				for node in row:
 					node.getNeighbors(GRID, ACROSS)
 
 			if len(openSet) > 0:
+				# mult is how many nodes are evaluated per frame
 				mult = SPEED
 				while mult > 0 and len(openSet) > 0:
 					
 					mult -= 1
-
+					# Choose the node with the lowest F score
 					winner = lowestFScore()
 					current = openSet[winner]
 
+					# If the solution has been found
 					if current == END:
 
 						tmp = current
-
+						# Holds the solution of the board
 						TEMP_PATH.append(current)
 
 						while tmp.previous:
@@ -244,16 +266,20 @@ def main():
 						foundPath = True
 						print("FOUND PATH")
 
+					# remove the current node from the openset and add it to the closed set
 					openSet.pop(winner)
 					closedSet.append(current)
 
+					# For every neighbor of the current node
 					for neighbor in current.neighbors:
 						
 						if neighbor in closedSet:
 							continue
 						
+						# Get the total g score of the neighbor
 						tGscore = current.g + heuristic(current,  neighbor)
 
+						# Check for a new path 
 						newPath = False
 						if neighbor in openSet:
 							if tGscore < neighbor.g:
@@ -271,10 +297,11 @@ def main():
 							neighbor.f = neighbor.g + neighbor.h
 
 			else:
-
+				# no path 
 				print("NO PATH")
 				PATHFINDING = False
 
+		# If a path is found every frame add it to the PATH
 		if foundPath and len(TEMP_PATH) != 0:
 
 			PATH.append(TEMP_PATH.pop())

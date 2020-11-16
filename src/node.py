@@ -81,15 +81,16 @@ class Node:
 			i = self.row
 			j = self.column
 
+			# above neighbor
 			if i > 0 and not grid[i - 1][j].isWall:
 					self.neighbors.append(grid[i - 1][j])
-
+			# below neighbor
 			if i < len(grid) - 1 and not grid[i + 1][j].isWall:
 					self.neighbors.append(grid[i + 1][j])
-
+			# left neighbor
 			if j > 0 and not grid[i][j - 1].isWall:
 					self.neighbors.append(grid[i][j - 1])
-
+			# right neighbor
 			if j < len(grid[i]) - 1 and not grid[i][j + 1].isWall:
 					self.neighbors.append(grid[i][j + 1])
 
