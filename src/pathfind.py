@@ -62,125 +62,82 @@ import pygame
 from math import sqrt
 from random import randint
 from sys import argv
+import argparse
 
 from node import Node
 
+# Constants
 WIDTH, HEIGHT = 600, 600
-
-if len(argv) == 2:
-	try:
-		argv = int(argv[1])
-		WIDTH = argv - (argv % 15)
-		print(f"WIDTH SET TO {WIDTH}")
-	except:
-		print("Invalid Command line argument")
-		print(f"WIDTH SET TO {WIDTH}")
-
-"""
-	Constants
-"""
 SPACE = 15
-COLS = WIDTH // SPACE
-ROWS = HEIGHT // SPACE 
+COLS, ROWS = 0, 0
 GRID = []
 SPEED = 10
-
-pygame.init()
-pygame.display.set_caption("A* PATHFINDING VISUALIZATION")
-
-SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
-
-# SETUP
-# Creates GRID of Nodes
-for i in range(ROWS):
-	GRID.append([])
-	for j in range(COLS):
-		GRID[i].append(Node(i, j, SPACE))
-
-# Default Start and End Nodes
-GRID[0][0].isStart = True
-GRID[-1][-1].isEnd = True
+SCREEN = None
 
 # Initially we are not finding a Path
 PATHFINDING = False
 
-# Keeps track of the start and end nodes
-START = GRID[0][0]
-END = GRID[-1][-1]
+# Keeps track of Start and End Node
+START, END = None, None
 
+# Stores the Path that was found
 TEMP_PATH = []
 PATH = []
 foundPath = False
+
+# False if Across pathing, True if Across and diagonal pathing
 ACROSS = False
 
+# openset and closedsets
 openSet = list()
 closedSet = list()
 
-def draw():
+
+def setup():
 	"""
-	Draws to the window
-	PARAMS: None
-	RETURN: None
+	Initial Setup
+	Sets Global Variables Values
 	"""
+	global SCREEN, GRID, START, END, COLS, ROWS
 
-	# Draws the grid 
-	for row in GRID:
-		for node in row:
-			# If it is a wall draw it as black
-			if node.isWall:
-				node.draw(SCREEN, (0,0,0))
-			# else draw it as white
-			else:
-				node.draw(SCREEN, (255,255,255))
+	pygame.init()
+	pygame.display.set_caption("A* PATHFINDING VISUALIZATION")
 
-	# Nodes in the openset are green
-	for node in openSet:
-		node.draw(SCREEN, (0,255,0))
+	SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
 
-	# Nodes in the closedSet are red
-	for node in closedSet:
-		node.draw(SCREEN, (255,0,0))
+	# Sets No. of columns and rows based on WIDTH and HEIGHT
+	COLS = WIDTH // SPACE
+	ROWS = HEIGHT // SPACE 
 
-	# The path from start to end is yellow
-	for node in PATH:
-		node.draw(SCREEN, (240, 255, 0, 1))
-
-	START.draw(SCREEN, (64,224,208))
-	END.draw(SCREEN, (148,0,211))
-
-	pygame.display.update()
-
-	
-def update():
-	"""
-	Updates the state of the window every frame
-	PARAMS: None
-	RETURN: None
-	"""
-
-	global START, END
-
+	# Creates GRID of Nodes
 	for i in range(ROWS):
+		GRID.append([])
 		for j in range(COLS):
+			GRID[i].append(Node(i, j, SPACE))
 
-			if GRID[i][j].rect.collidepoint(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]):
-				keys = pygame.key.get_pressed()
+	# Default Start and End Nodes
+	GRID[0][0].isStart = True
+	GRID[-1][-1].isEnd = True
 
-				if keys[pygame.K_s] and not GRID[i][j].isEnd:
-					setStart(i, j)
-
-				elif keys[pygame.K_e] and not GRID[i][j].isStart:
-					setEnd(i, j)
-
-			GRID[i][j].update()
+	START = GRID[0][0]
+	END = GRID[-1][-1]
 
 
 def main():
 	"""
 	Main function runs the whole program
 	"""
-	global PATHFINDING, foundPath
-	
+	global PATHFINDING, foundPath, WIDTH
+
+	parser = argparse.ArgumentParser()
+	parser.add_argument("--width", help=f"Enter width of the pygame window : default - {WIDTH}", type=int)
+	args = parser.parse_args()
+
+	WIDTH = args.width - (args.width % 15) if args.width else WIDTH
+	print("Window Width: ", WIDTH)
+
+	setup()
+
 	while True:
 
 		for event in pygame.event.get():
@@ -307,6 +264,65 @@ def main():
 			PATH.append(TEMP_PATH.pop())
 		
 		draw()
+
+
+def draw():
+	"""
+	Draws to the window
+	PARAMS: None
+	RETURN: None
+	"""
+
+	# Draws the grid 
+	for row in GRID:
+		for node in row:
+			# If it is a wall draw it as black
+			if node.isWall:
+				node.draw(SCREEN, (0,0,0))
+			# else draw it as white
+			else:
+				node.draw(SCREEN, (255,255,255))
+
+	# Nodes in the openset are green
+	for node in openSet:
+		node.draw(SCREEN, (0,255,0))
+
+	# Nodes in the closedSet are red
+	for node in closedSet:
+		node.draw(SCREEN, (255,0,0))
+
+	# The path from start to end is yellow
+	for node in PATH:
+		node.draw(SCREEN, (240, 255, 0, 1))
+
+	START.draw(SCREEN, (64,224,208))
+	END.draw(SCREEN, (148,0,211))
+
+	pygame.display.update()
+
+	
+def update():
+	"""
+	Updates the state of the window every frame
+	PARAMS: None
+	RETURN: None
+	"""
+
+	global START, END
+
+	for i in range(ROWS):
+		for j in range(COLS):
+
+			if GRID[i][j].rect.collidepoint(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]):
+				keys = pygame.key.get_pressed()
+
+				if keys[pygame.K_s] and not GRID[i][j].isEnd:
+					setStart(i, j)
+
+				elif keys[pygame.K_e] and not GRID[i][j].isStart:
+					setEnd(i, j)
+
+			GRID[i][j].update()
 
 
 def heuristic(node, goal):
