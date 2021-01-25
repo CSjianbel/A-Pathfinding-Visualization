@@ -12,8 +12,8 @@ Usage:
 
 		DEFAULT WIDTH: 600 
 
-		python pathfind.py <WIDTH>
-		python pathfind.py 900
+		python pathfind.py -w 900 
+		python pathfind.py --width 900
 	
 
 Instructions:
@@ -130,7 +130,7 @@ def main():
 	global PATHFINDING, foundPath, WIDTH
 
 	parser = argparse.ArgumentParser()
-	parser.add_argument("--width", help=f"Enter width of the pygame window : default - {WIDTH}", type=int)
+	parser.add_argument("-w", "--width", help=f"Enter width of the pygame window : default - {WIDTH}", type=int)
 	args = parser.parse_args()
 
 	WIDTH = args.width - (args.width % 15) if args.width else WIDTH
